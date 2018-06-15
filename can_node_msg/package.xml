@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <name>can_node_msg</name>
+  <version>0.0.1</version>
+
+  <description>
+  can_node message
+  </description>
+
+  <maintainer email="shenzb12@lzu.edu.cn">AdamShan</maintainer>
+
+  <license>BSD</license>
+
+  <author email="shenzb12@lzu.edu.cn">AdamShan</author>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>catkin</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+
+
+  <export></export>
+
+</package>
