@@ -3,7 +3,7 @@
 CanMsgReceiver::CanMsgReceiver(ros::NodeHandle &nh)
 {
 
-    nh.param<std::string>("can_msg_pub_topic", can_msg_pub_topic_, "/can_publish");
+    nh.param<std::string>("can_msg_pub_topic", can_msg_pub_topic_, "/can_msg_received");
     ROS_INFO("can_msg_pub_topic_: %s", can_msg_pub_topic_.c_str());
     can_msg_pub_ = nh.advertise<can_node_msg::can>(can_msg_pub_topic_, 10);
 
