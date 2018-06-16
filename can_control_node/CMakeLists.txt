@@ -41,5 +41,9 @@ target_link_libraries(twist_converter_node ${catkin_LIBRARIES})
 add_executable(canbus_trans src/canbus_trans.cpp)
 target_link_libraries(canbus_trans ${catkin_LIBRARIES})
 
-add_executable(can_msg_receiver src/can_msg_receiver.cpp src/canalystii.cpp src/canalystii_node.cpp src/pid.cpp)
+add_executable(can_msg_receiver src/can_msg_receiver.cpp)
 target_link_libraries(can_msg_receiver ${PROJECT_SOURCE_DIR}/lib/libcontrolcan.so ${catkin_LIBRARIES})
+
+add_executable(can_msg_sender src/can_msg_sender.cpp)
+target_link_libraries(can_msg_sender ${PROJECT_SOURCE_DIR}/lib/libcontrolcan.so ${catkin_LIBRARIES})
+

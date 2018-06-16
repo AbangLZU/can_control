@@ -1,18 +1,18 @@
 <launch>
-
   <!-- <remap from="velodyne_points" to="/points_raw"/> -->
-
-<!--  
-  <include file="$(find teleop_joy)/launch/teleop_joy.launch" />
-  <include file="$(find velodyne_pointcloud)/launch/32c_points.launch" />
+  <!--  
+  <include file="$(find teleop_joy)/launch/teleop_joy.launch" /><include file="$(find velodyne_pointcloud)/launch/32c_points.launch" />
 -->
   <!-- <include file="$(find teleop_joy)/launch/teleop_joy.launch" /> -->
   <!-- <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" /> -->
-
-  <node pkg="can_control_node" type="canalystii_node_ros" name="canalystii_node_ros" output="screen"/>
+  <!-- declare arguments with default values -->
+  <!-- <param name="/can_device_open" type="bool" value="false" />
+  <param name="/can_device_init" type="bool" value="false" />
+  <param name="/can_device_start" type="bool" value="false" /> -->
+  <!-- <node pkg="can_control_node" type="canalystii_node_ros" name="canalystii_node_ros" output="screen"/> -->
   <!-- <node pkg="can_control_node" type="canbus_trans" name="canbus_trans"/> -->
-  <node pkg="can_control_node" type="twist_converter_node" name="twist_converter_node"/>
+  <!-- <node pkg="can_control_node" type="twist_converter_node" name="twist_converter_node"/> -->
+  <node pkg="can_control_node" type="can_msg_receiver" name="can_msg_receiver" output="screen"/>
 
-  <!-- <node pkg="can_control_node" type="can_msg_receiver" name="can_msg_receiver" output="screen"/> -->
-
+  <node pkg="can_control_node" type="can_msg_sender" name="can_msg_sender" output="screen"/>
 </launch>

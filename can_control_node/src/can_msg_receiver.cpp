@@ -21,8 +21,9 @@ CanMsgReceiver::CanMsgReceiver(ros::NodeHandle &nh)
     config.Timing1 = 0x1C;
     config.Mode = 0; //正常模式
 
-    if (PrepareCan()){
-        std::cout<<"Prepare can successfully!!"<<std::endl;
+    if (PrepareCan())
+    {
+        std::cout << "Prepare can successfully!!" << std::endl;
     }
 }
 
@@ -32,15 +33,20 @@ CanMsgReceiver::~CanMsgReceiver()
 
 int CanMsgReceiver::PrepareCan()
 {
+    if (VCI_OpenDevice(vci_device_type_, vci_device_ind_, 0) != 1)
+    {
+        ROS_ERROR("Can not open the can device!!");
+        return 0;
+    }
     if (VCI_InitCAN(vci_device_type_, vci_device_ind_, can_port_idx_, &config) != 1)
     {
-        printf(">>Init CAN %d error\n", can_port_idx_);
+        ROS_ERROR(">>Init CAN %d error\n", can_port_idx_);
         VCI_CloseDevice(VCI_USBCAN2, 0);
         return 0;
     }
-
-    if(VCI_StartCAN(vci_device_type_, vci_device_ind_, can_port_idx_) != 1){ 
-        printf(">>Start CAN %d error\n", can_port_idx_);
+    if (VCI_StartCAN(vci_device_type_, vci_device_ind_, can_port_idx_) != 1)
+    {
+        ROS_ERROR(">>Start CAN %d error\n", can_port_idx_);
         VCI_CloseDevice(VCI_USBCAN2, 0);
         return 0;
     }

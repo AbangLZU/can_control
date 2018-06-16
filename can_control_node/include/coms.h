@@ -3,6 +3,14 @@
 
 #define PI 3.14159
 
+
+#define STEERLING_TX 0x215
+#define STEERLING_RX 0x322
+#define BREAK_TX 0x130
+#define BREAK_RX 0x100
+#define THROTTLE_TX NULL
+#define THROTTLE_RX NULL
+
 // safety parameters
 #define SPEED_LIMIT 4.0 //2.78  // m/s, IMPORTANT: this is safty limit
 #define _NOBRAKE_CONTROL_MAX_VELOCITY 4.0 // 2.77 m/s = 10 km/hr, it must be less than _SPEED_LIMIT
