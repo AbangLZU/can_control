@@ -8,6 +8,11 @@
 #define STEERLING_RX 0x322
 #define BREAK_TX 0x130
 #define BREAK_RX 0x100
+#define CH1_CH2 0x600
+#define CH3_CH4 0x602
+#define THROTTLE_TX 0x620
+#define THROTTLE_RX 0x630
+
 #define THROTTLE_TX NULL
 #define THROTTLE_RX NULL
 

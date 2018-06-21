@@ -1,93 +1,80 @@
-#pragma once
-
-
-#include <iostream>
-#include <cmath>
 #include "pid.h"
 
 using namespace std;
 
-class PIDImpl
+PIDControl::PIDControl()
 {
-    public:
-        PIDImpl( double dt, double max, double min, double Kp, double Kd, double Ki );
-        ~PIDImpl();
-        double calculate( double setpoint, double pv );
-
-    private:
-        double _dt;
-        double _max;
-        double _min;
-        double _Kp;
-        double _Kd;
-        double _Ki;
-        double _pre_error;
-        double _integral;
-};
-
-
-PID::PID( double dt, double max, double min, double Kp, double Kd, double Ki )
-{
-    pimpl = new PIDImpl(dt,max,min,Kp,Kd,Ki);
-}
-double PID::calculate( double setpoint, double pv )
-{
-    return pimpl->calculate(setpoint,pv);
-}
-PID::~PID() 
-{
-    delete pimpl;
+    is_initialized_ = false;
+    min_num_ = -MAX_THROTTLE_PERCENTAGE;
+    max_num_ = MAX_THROTTLE_PERCENTAGE;
 }
 
-
-/**
- * Implementation
- */
-PIDImpl::PIDImpl( double dt, double max, double min, double Kp, double Kd, double Ki ) :
-    _dt(dt),
-    _max(max),
-    _min(min),
-    _Kp(Kp),
-    _Kd(Kd),
-    _Ki(Ki),
-    _pre_error(0),
-    _integral(0)
+PIDControl::~PIDControl()
 {
 }
 
-double PIDImpl::calculate( double setpoint, double pv )
+void PIDControl::initial(double kp, double ki, double kd)
 {
-    
-    // Calculate error
-    double error = setpoint - pv;
+    if (is_initialized_ == false)
+    {
+        kp_ = kp;
+        ki_ = ki;
+        kd_ = kd;
 
-    // Proportional term
-    double Pout = _Kp * error;
-
-    // Integral term
-    _integral += error * _dt;
-    double Iout = _Ki * _integral;
-
-    // Derivative term
-    double derivative = (error - _pre_error) / _dt;
-    double Dout = _Kd * derivative;
-
-    // Calculate total output
-    double output = Pout + Iout + Dout;
-
-    // Restrict to max/min
-    if( output > _max )
-        output = _max;
-    else if( output < _min )
-        output = _min;
-
-    // Save error to previous error
-    _pre_error = error;
-
-    return output;
+        p_error_ = i_error_ = d_error_ = 0.0;
+        is_initialized_ = true;
+    }
 }
 
-PIDImpl::~PIDImpl()
+void PIDControl::resetError()
 {
+    p_error_ = i_error_ = d_error_ = 0.0;
+    //is_initialized_ = false;
 }
 
+void PIDControl::updateError(double cte, double sample_time)
+{
+    d_error_ = (cte - p_error_) / sample_time;
+    i_error_ = i_error_ + cte * sample_time;
+    p_error_ = cte;
+
+    return;
+}
+
+double PIDControl::step(double cte, double sample_time)
+{
+    this->updateError(cte, sample_time);
+
+    double y = kp_ * p_error_ + ki_ * i_error_ + kd_ * d_error_;
+
+    double val = max(min_num_, min(y, max_num_));
+
+    if (val > max_num_)
+    {
+        val = max_num_;
+    }
+    else if (val < min_num_)
+    {
+        val = min_num_;
+    }
+
+    return val;
+}
+
+void PIDControl::setRange(double min, double max)
+{
+    min_num_ = min;
+    max_num_ = max;
+
+    return;
+}
+
+//reset PID gains.
+void PIDControl::setGains(double kp, double ki, double kd)
+{
+    kp_ = kp;
+    ki_ = ki;
+    kd_ = kd;
+
+    return;
+}

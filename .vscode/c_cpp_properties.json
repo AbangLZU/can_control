@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/home/abang/can_ws/devel/include",
+                    "/opt/ros/kinetic/include",
+                    "/home/abang/can_ws/src/can_control_node/include",
+                    "/usr/include"
+                ]
+            },
+            "includePath": [
+                "/home/abang/can_ws/devel/include",
+                "/opt/ros/kinetic/include",
+                "/home/abang/can_ws/src/can_control_node/include",
+                "/usr/include"
+            ],
+            "name": "Linux",
+            "intelliSenseMode": "clang-x64",
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 3
+}
